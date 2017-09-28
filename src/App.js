@@ -30,6 +30,7 @@ export default class App extends Component {
     postID: [],
     voteNames: [],
     showPage: false,
+    displayName: "",
     error: ""
   };
 

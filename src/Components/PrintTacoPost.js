@@ -6,6 +6,9 @@ const PrintTacoPost = (props) => {
 
   console.log(props); //Skriver ut voteID
 
+  //Ninas exempel: db.ref(users/${this.props.currentUser.userId}/acceptedChallenges)
+  //så kör jag arrayfunktinen och så kan jag hantera bara då min lista med "accepted challenges" för en specifik användare
+
 
                  //Senaste testet. Filtrerar ut alla posts som har votes
            /*      const voteNamestest = props.allTacoPosts.map((item, index) => {
