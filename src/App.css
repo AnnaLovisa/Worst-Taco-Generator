@@ -1,0 +1,93 @@
+.postButton {
+  background-color: #EB977E;
+  border: none;
+  text-decoration: none;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  padding: 15px 32px;
+  border-radius: 50px;
+}
+
+.registerButton, .loginButton, .logoutButton, .deleteButton {
+    background-color: #EB977E;
+    border: none;
+    text-decoration: none;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    padding: 15px 32px;
+    border-radius: 50px;
+}
+
+.voteButton {
+  background-color: #A2B631;
+  border: none;
+  text-decoration: none;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  padding: 15px 32px;
+  border-radius: 50px;
+}
+
+
+/*h1, h2, h3 {
+  font-family: 'Lora', serif;
+  font-weight: bold;
+  color: #917E6D
+}*/
+
+
+h1, h2, h3, h4, h5, .searchInput input, label, .toggleButton {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  color: #917E6D
+}
+
+.toggleButton:hover, .toggleButton:active, .toggleButton:after {
+  text-decoration: none;
+  color: #A2B631;
+}
+
+h1 span {
+  color: #EB977E;
+}
+
+.searchInput input {
+  text-align: center;
+}
+
+p, .form-group {
+  font-family: 'Open Sans', sans-serif;
+}
+
+input {
+  border-radius: 10px;
+}
+
+hr {
+  border: 0;
+  height: 2px;
+  width: 80%;
+  background: #917E6D;
+  background-image: linear-gradient(to right, #EB977E, #EB977E, #917E6D);
+}
+
+.formContainer {
+  border: 2px solid #FDFBFC;
+  border-radius: 20px;
+}
+
+.card  {
+  border-radius: 20px;
+}
+
+.card-deck {
+  border-radius: 20px;
+}
+
+.navbar {
+  border-radius: 20px;
+}
+
