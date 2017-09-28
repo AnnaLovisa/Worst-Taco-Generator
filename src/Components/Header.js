@@ -10,7 +10,7 @@ const Header = (props) => {
             {/*If user is logged in, print out this parapraph below*/}
             {props.loginUser && 
                 <p className="nav-item">
-                    Logged in as <strong>{props.loginUser.email}</strong>
+                    Logged in as <strong>{props.loginUser.displayName}</strong>
                 </p>}
             {props.loginUser &&
                 <p>
