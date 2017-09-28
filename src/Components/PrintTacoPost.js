@@ -47,14 +47,14 @@ const PrintTacoPost = (props) => {
     return(
 
         <div className=" w-50 p-3 card-deck">
-        <div className="d-flex-column justify-content-center card">
+        <div className="card">
           <div className="card-block">
             <h4 className="card-title">{props.tacoName}</h4>
             <p className="card-text">{props.tacoContent}</p>
           </div>
 
           <div className="d-flex justify-content-between card-footer">
-            <small className="text-muted">Created By {props.userID}</small>
+            <small className="text-muted">Created By {props.userName}</small>
             {props.loggedIn === props.userID && <button onClick={() => props.deleteClick(props.id)} className="deleteButton">Delete</button>}
             <button onClick={() => props.onClick(props.id)} className="voteButton">Vote</button>            
             <small className="text-muted">Voted By

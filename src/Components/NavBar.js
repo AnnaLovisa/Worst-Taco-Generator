@@ -15,9 +15,12 @@ return(
             <li className="nav-item">
                 <button onClick={props.showPage} className="btn btn-link toggleButton">My Page</button>
             </li>
-        </ul>      
-            {/* My SearchForm */}
-            {props.children}         
+            <li className="nav-item">
+                <button onClick={props.showForm} className="btn btn-link toggleButton">New Post</button>
+            </li>
+        </ul>
+        {/* My SearchForm */}
+        {props.children}              
     </div>
   </nav>
 )

@@ -10,10 +10,10 @@ import PrintTacoPost from './Components/PrintTacoPost.js';
 import PrintSearchResults from './Components/PrintSearchResults.js';
 import VotesList from './Components/VotesList.js';
 import SearchForm from './Components/SearchForm.js';
-/*import Votes from './Components/Votes.js';
-import Button from './Components/Button.js';*/
+/*import Votes from './Components/Votes.js';*/
 import NavBar from './Components/NavBar.js';
-import MyPage from './Components/MyPage.js';
+
+
 
 export default class App extends Component {
 
@@ -24,12 +24,13 @@ export default class App extends Component {
     allTacoPosts: [],
     tacoName: "",
     tacoContent: "",
-    searchInputField: "Search for a taco",
     postInputField: "",
-    countUp: "",
     postID: [],
     voteNames: [],
     showPage: false,
+    showForm: false,
+    showHome: true,
+    showSearchPosts: false,
     displayName: "",
     error: ""
   };
@@ -85,6 +86,7 @@ export default class App extends Component {
   
   onChange = (event) => {
     this.setState({searchInputField: event.target.value});
+    this.setState({showSearchPosts: true})
   }
 
   handleLogout = () => {
@@ -106,6 +108,7 @@ export default class App extends Component {
     const postItem = {
       /*createdByemail: this.state.email,*/
       createdBy: this.state.user.uid, //För att koppla varje post till varje användare
+      createdByUserName: this.state.user.displayName,
       tacoName: this.state.tacoName,
       tacoContent: this.state.tacoContent
     }
@@ -153,11 +156,25 @@ export default class App extends Component {
 
   showPage = () => {
     this.setState({showPage: true})
+    this.setState({showHome: false})
+    this.setState({showForm: false})
+    this.setState({showSearchPosts: false})
   }
 
   showHome = () => {
+    this.setState({showHome: true})
     this.setState({showPage: false})
+    this.setState({showForm: false})
+    this.setState({showSearchPosts: false})
   }
+
+  showForm = () => {
+    this.setState({showForm: true})
+    this.setState({showPage: false})
+    this.setState({showHome: false})
+    this.setState({showSearchPosts: false})
+  }
+
     
 
   /* testar med att pusha in i ett eget Votes-objekt istället */
@@ -237,30 +254,41 @@ export default class App extends Component {
       if(item.key.votedFor === this.state.allTacoPosts.key)
        console.log(item.key.votedFor)
       return item.key.votedFor           
-   }) */
+   })
+   
+   */
     
     //Mappar igenom allTacoPosts-arrayen in i postList-variabeln
-    const postList = this.state.allTacoPosts.map((item, index) => {
-    
+    const postList = this.state.allTacoPosts.map((item, index) => {   
       console.log(item.key)
+
       return(
         <div key={index} className="d-flex justify-content-center">
-          <PrintTacoPost onClick={this.handleNewVote} key={index} voteID={item.key} id={item.key} allTacoPosts={this.state.allTacoPosts} deleteClick={this.deletePost} tacoName={item.value.tacoName} tacoContent={item.value.tacoContent} userID={item.value.createdBy} loggedIn={this.state.userID} voteNames={this.state.voteNames} postID={this.state.postID}/>
+          <PrintTacoPost onClick={this.handleNewVote} key={index} voteID={item.key}
+          id={item.key} allTacoPosts={this.state.allTacoPosts} deleteClick={this.deletePost}
+          tacoName={item.value.tacoName} tacoContent={item.value.tacoContent}
+          userID={item.value.createdBy} userName={item.value.createdByUserName} loggedIn={this.state.userID} voteNames={this.state.voteNames}
+          postID={this.state.postID}/>
           {/*om värdet på postidt är samma som värdet på votespostidt*/}
          </div>
     )})
 
 
-    //För att endast visa användarens egna posts
+    //Only posts made by specific user
     const postListOwnPage = this.state.allTacoPosts.map((item, index) => {
       console.log(item.key)
-      if(this.state.showPage && this.state.userID === item.value.createdBy){
+      if(this.state.userID === item.value.createdBy){
         (console.log(this.state.showPage));
         return(      
           <div key={index} className="d-flex justify-content-center">
-              <PrintTacoPost onClick={this.handleNewVote} key={index} voteID={item.key} id={item.key} allTacoPosts={this.state.allTacoPosts} deleteClick={this.deletePost} tacoName={item.value.tacoName} tacoContent={item.value.tacoContent} userID={item.value.createdBy} loggedIn={this.state.userID} voteNames={this.state.voteNames} postID={this.state.postID}/>           
+              <PrintTacoPost onClick={this.handleNewVote} key={index} voteID={item.key}
+               id={item.key} allTacoPosts={this.state.allTacoPosts} deleteClick={this.deletePost}
+               tacoName={item.value.tacoName} tacoContent={item.value.tacoContent}
+               userID={item.value.createdBy} userName={item.value.createdByUserName} loggedIn={this.state.userID} voteNames={this.state.voteNames}
+               postID={this.state.postID}/>           
           </div>
-    )}})
+      )}})
+
     
     //Try out
     /* const voteList = this.state.allTacoPosts.map(item => {
@@ -369,45 +397,46 @@ export default class App extends Component {
               <LogoutButton onClick={this.handleLogout} />
           </Header>
 
-        {this.state.user && <NavBar showPage={this.showPage} showHome={this.showHome}>
+          {this.state.user && <NavBar showPage={this.showPage} showHome={this.showHome} showForm={this.showForm}>
                                 <SearchForm onChange={this.onChange} inputField={this.state.searchInputField}/>
                             </NavBar>}
         
-        {/*If user is logged out, the login-form and register-form will appear*/}    
-        {!this.state.user && <div className="d-flex justify-content-center p-5 formContainer">
-                                  <RegisterForm /><LoginForm />
-                             </div>}
+          {/*If user is logged out, the login-form and register-form will appear*/}    
+          {!this.state.user && <div className="d-flex justify-content-center p-5 formContainer">
+                                    <RegisterForm /><LoginForm />
+                              </div>}
 
-        {/*If user is logged in, the taco-posts and taco-form will appear*/}    
-       {this.state.user && !this.state.showPage &&
-       <div className="d-flex-column justify-content-center">
-         <h3 className="text-center">All posts</h3>
-         <PrintSearchResults allTacoPosts={this.state.allTacoPosts} searchInputField={this.state.searchInputField} onClick={this.onClick} deleteClick={this.deletePost}/>
-         {/*<PrintTacoPost allTacoPosts={this.state.allTacoPosts} onClick={this.onClick} />*/}
-       </div>}
-
-       {/*All posts to be shown only when someone is logged in and showPage-button is not clicked*/}
-       {this.state.user && !this.state.showPage &&
-       <div className="d-flex-column justify-content-center">
-         <h3 className="text-center">All posts</h3>
-         {postList}          
-       </div>}
-
-      {/*Users own page to be shown only when clicked on page-link*/}
-       {this.state.showPage && 
-          <div className="d-flex-column">
-              <h3 className="text-center">{this.state.user.email}s Page</h3>
-              {postListOwnPage}
+          {/*If user is logged in, the taco-posts and taco-form will appear*/}    
+          {this.state.user && this.state.showSearchPosts && 
+          <div>
+            <h2 className="text-center mt-5">Searched tacos</h2>
+            <PrintSearchResults allTacoPosts={this.state.allTacoPosts} searchInputField={this.state.searchInputField}
+            onClick={this.onClick} deleteClick={this.deletePost}/>
           </div>}
 
-       {/*PostForm to be shown only when someone is logged in*/}
-       {this.state.user &&
-       <div>
-          <PostForm onClick={this.handleNewPost} inputTacoName={this.state.tacoName}
-          inputTacoContent={this.state.tacoContent} handleTitleInput={this.handleTitleInput}
-          handleContentInput={this.handleContentInput}/>          
-       </div>}
-      </div>
+          {/*All posts to be shown only when someone is logged in and showPage-button and showForm-button is not clicked*/}
+          {this.state.user && this.state.showHome && 
+          <div>
+            <h2 className="text-center mt-5">All posts</h2>
+            {postList}          
+          </div>}
+
+          {/*Users own page to be shown only when clicked on page-link*/}
+          {this.state.user && this.state.showPage &&
+          <div>
+              <h2 className="text-center mt-5">All posts by {this.state.user.displayName}</h2>
+              {postListOwnPage}
+          </div>}
+ 
+          {/*PostForm to be shown only when someone is logged in and New Post is clicked*/}
+          {this.state.user && this.state.showForm && 
+          <div className="d-flex-column justify-content-center">
+          <h2 className="text-center mt-5">Create new post</h2>
+              <PostForm onClick={this.handleNewPost} inputTacoName={this.state.tacoName}
+              inputTacoContent={this.state.tacoContent} handleTitleInput={this.handleTitleInput}
+              handleContentInput={this.handleContentInput}/>          
+          </div>}
+        </div>
      </div>
     );
   }
@@ -421,8 +450,3 @@ function toArray(firebaseObject) {
   }
   return array;
 }
-
-/*
-<Button>Normal button</Button>
-<Button primary>Another button</Button>
-*/

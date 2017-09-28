@@ -15,7 +15,7 @@ class PrintSearchResults extends Component {
                     <p className="card-text">{item.value.tacoContent}</p>
                   </div>
                   <div className="d-flex justify-content-between card-footer">
-                    <small className="text-muted">Created By {item.value.createdBy}</small>
+                    <small className="text-muted">Created By {item.value.createdByUserName}</small>
                     <button onClick={() => this.props.onClick(item.key)} className="voteButton">Vote</button>
                     <button onClick={() => this.props.deleteClick(this.props.id)} className="deleteButton">Delete</button>
                   </div>
@@ -30,8 +30,7 @@ class PrintSearchResults extends Component {
 
 
     return(
-      <div>
-        <h3 className="text-center">Searched Tacos</h3>
+      <div className="d-flex-column justify-content-center">
         {searchList}
       </div>   
     )
